@@ -10,11 +10,10 @@ import { CachePolicy, PriceClass, ViewerProtocolPolicy } from 'aws-cdk-lib/aws-c
 import { S3Origin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
 import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
-import { Construct } from 'constructs';
 import { generatePipeline } from './pipeline';
 
-export class AlexandriaFrontendStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class CairoFrontendStack extends cdk.Stack {
+  constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const prodBucket = new s3.Bucket(this, 'ProdBucket', {
@@ -25,7 +24,7 @@ export class AlexandriaFrontendStack extends cdk.Stack {
       bucketName: 'beta.cv.kevinr.net'
     });
 
-    generatePipeline(this, betaBucket);
+    generatePipeline(this, betaBucket, prodBucket);
 
     const hostedZone = HostedZone.fromHostedZoneAttributes(this, 'KevinrNetHostedZone', {
       hostedZoneId: process.env.hostedZone as string,

@@ -2,7 +2,7 @@
   "name": "alexandria",
   "version": "0.1.0",
   "bin": {
-    "alexandria": "bin/alexandria.js"
+    "alexandria": "src/alexandria.js"
   },
   "scripts": {
     "build": "tsc",

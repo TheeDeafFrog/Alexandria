@@ -8,7 +8,7 @@ import {
 } from 'aws-cdk-lib';
 import { ComputeType } from 'aws-cdk-lib/aws-codebuild';
 
-export function generatePipeline(scope: cdk.Stack, betaBucket: s3.Bucket) {
+export function generatePipeline(scope: cdk.Stack, betaBucket: s3.Bucket, prodBucket: s3.Bucket) {
     const pipeline = new pipelines.Pipeline(scope, 'CairoPipeline', {
         pipelineName: 'cairoFrontendPipeline',
         crossAccountKeys: false
@@ -90,6 +90,29 @@ export function generatePipeline(scope: cdk.Stack, betaBucket: s3.Bucket) {
     pipeline.addStage({
         stageName: 'Beta',
         actions: [betaDeploy]
+    });
+
+    const manualApprovalAction = new actions.ManualApprovalAction({
+        actionName: 'prodPromotion'
+    });
+
+    pipeline.addStage({
+        stageName: 'ProdPromotion',
+        actions: [manualApprovalAction]
+    });
+
+    const adminUser = cdk.aws_iam.User.fromUserName(scope, 'AdminUser', 'Admin');
+    manualApprovalAction.grantManualApproval(adminUser);
+
+    const prodDeploy = new actions.S3DeployAction({
+        actionName: 'prodDeploy',
+        bucket: prodBucket,
+        input: buildOutput
+    });
+
+    pipeline.addStage({
+        stageName: 'Prod',
+        actions: [prodDeploy]
     });
 
     return pipeline;
