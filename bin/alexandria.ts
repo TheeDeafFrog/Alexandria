@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { CairoFrontendStack as AlexandriaFrontendStack } from '../src/frontend/stack';
+import { AlexandriaFrontendStack } from '../src/frontend/stack';
 import { Construct } from 'constructs';
 
 const env = { 
@@ -13,7 +12,7 @@ class Application extends cdk.Stage {
     constructor(scope: Construct, id: string, props?: cdk.StageProps) {
         super(scope, id, props);
 
-        new AlexandriaFrontendStack(this, 'AlexandriaFrontendStack', props);
+        new AlexandriaFrontendStack(this, 'Frontend', props);
     }
 } 
 
@@ -21,7 +20,7 @@ class InfrastructurePipelineStack extends cdk.Stack {
     constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const connection = new cdk.aws_codestarconnections.CfnConnection(scope, 'AlexandriaGithubConnection', {
+        const connection = new cdk.aws_codestarconnections.CfnConnection(this, 'AlexandriaGithubConnection', {
             connectionName: 'alexandriaConnection',
             providerType: 'Github'
         });
@@ -46,4 +45,4 @@ class InfrastructurePipelineStack extends cdk.Stack {
 }
 
 const App = new cdk.App();
-new InfrastructurePipelineStack(App, 'AlexandriaInfrastructureStack', {env});
+new InfrastructurePipelineStack(App, 'Alexandria', {env});

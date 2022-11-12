@@ -1,3 +1,4 @@
+import * as cdk from 'aws-cdk-lib';
 import {
     aws_s3 as s3,
     aws_codepipeline as pipelines,
@@ -6,9 +7,8 @@ import {
     aws_codebuild as codeBuild,
 } from 'aws-cdk-lib';
 import { ComputeType } from 'aws-cdk-lib/aws-codebuild';
-import { Construct } from 'constructs';
 
-export function generatePipeline(scope: Construct, betaBucket: s3.Bucket) {
+export function generatePipeline(scope: cdk.Stack, betaBucket: s3.Bucket) {
     const pipeline = new pipelines.Pipeline(scope, 'CairoPipeline', {
         pipelineName: 'cairoFrontendPipeline',
         crossAccountKeys: false
@@ -43,7 +43,7 @@ export function generatePipeline(scope: Construct, betaBucket: s3.Bucket) {
                         node: 'latest'
                     },
                     commands: [
-                        'npm ci'
+                        'npm install'
                     ]
                 },
                 pre_build: {

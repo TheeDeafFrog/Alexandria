@@ -13,7 +13,7 @@ import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Construct } from 'constructs';
 import { generatePipeline } from './pipeline';
 
-export class CairoFrontendStack extends cdk.Stack {
+export class AlexandriaFrontendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
