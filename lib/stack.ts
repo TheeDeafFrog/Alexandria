@@ -1,7 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { aws_s3 as s3 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { stages } from '../constants';
+import { stages } from './constants';
 
 export class AlexandriaBackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StageProps) {

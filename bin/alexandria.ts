@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { CairoFrontendStack } from '../lib/frontend/stack';
 import { Construct } from 'constructs';
-import { AlexandriaBackendStack } from '../lib/backend/stack';
+import { AlexandriaBackendStack } from '../lib/stack';
 import { stages } from '../lib/constants';
 
 const env = { 
@@ -10,7 +9,7 @@ const env = {
     region: process.env.CDK_DEFAULT_REGION 
 };
 
-class FrontendApplication extends cdk.Stage {
+class BackendApplication extends cdk.Stage {
     constructor(scope: Construct, id: string, props?: cdk.StageProps) {
         super(scope, id, props);
 
@@ -42,13 +41,12 @@ class InfrastructurePipelineStack extends cdk.Stack {
             })
         });
 
-        const betaStage = pipeline.addStage(new FrontendApplication(this, stages.beta, props));
+        const betaStage = pipeline.addStage(new BackendApplication(this, stages.beta, props));
         betaStage.addPost(new cdk.pipelines.ManualApprovalStep('ProdPromotion'));
 
-        pipeline.addStage(new FrontendApplication(this, stages.prod, props))
+        pipeline.addStage(new BackendApplication(this, stages.prod, props))
     }
 }
 
-const App = new cdk.App();
-new InfrastructurePipelineStack(App, 'Alexandria', {env});
-new CairoFrontendStack(App, 'Cairo', {env});
+const app = new cdk.App();
+new InfrastructurePipelineStack(app, 'Alexandria', {env});
