@@ -22,7 +22,7 @@ class InfrastructurePipelineStack extends cdk.Stack {
 
         const connection = new cdk.aws_codestarconnections.CfnConnection(this, 'AlexandriaGithubConnection', {
             connectionName: 'alexandriaConnection',
-            providerType: 'Github'
+            providerType: 'GitHub'
         });
 
         const source = cdk.pipelines.CodePipelineSource.connection('TheeDeafFrog/Alexandria', 'release', {
