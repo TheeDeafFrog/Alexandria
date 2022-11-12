@@ -51,4 +51,4 @@ class InfrastructurePipelineStack extends cdk.Stack {
 
 const App = new cdk.App();
 new InfrastructurePipelineStack(App, 'Alexandria', {env});
-// new CairoFrontendStack(App, 'Cairo', {env});
+new CairoFrontendStack(App, 'Cairo', {env});

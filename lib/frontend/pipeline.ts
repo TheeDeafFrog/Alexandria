@@ -59,8 +59,9 @@ export function generatePipeline(scope: cdk.Stack, betaBucket: s3.Bucket, prodBu
             },
             artifacts: {
                 files: [
-                    'dist/**/*'
-                ]
+                    '**/*'
+                ],
+                'base-directory': 'dist'
             },
         }),
         environment:{
