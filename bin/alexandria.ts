@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { CairoFrontendStack } from './frontend/stack';
+import { CairoFrontendStack } from '../lib/frontend/stack';
 import { Construct } from 'constructs';
-import { AlexandriaBackendStack } from './backend/stack';
-import { stages } from './constants';
+import { AlexandriaBackendStack } from '../lib/backend/stack';
+import { stages } from '../lib/constants';
 
 const env = { 
     account: process.env.CDK_DEFAULT_ACCOUNT, 
@@ -19,7 +19,7 @@ class FrontendApplication extends cdk.Stage {
 } 
 
 class InfrastructurePipelineStack extends cdk.Stack {
-    constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
+    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
         const connection = new cdk.aws_codestarconnections.CfnConnection(this, 'AlexandriaGithubConnection', {
@@ -51,4 +51,4 @@ class InfrastructurePipelineStack extends cdk.Stack {
 
 const App = new cdk.App();
 new InfrastructurePipelineStack(App, 'Alexandria', {env});
-new CairoFrontendStack(App, 'Cairo', {env});
+// new CairoFrontendStack(App, 'Cairo', {env});
