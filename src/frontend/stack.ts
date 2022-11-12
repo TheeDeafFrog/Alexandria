@@ -10,10 +10,11 @@ import { CachePolicy, PriceClass, ViewerProtocolPolicy } from 'aws-cdk-lib/aws-c
 import { S3Origin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
 import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
+import { Construct } from 'constructs';
 import { generatePipeline } from './pipeline';
 
 export class CairoFrontendStack extends cdk.Stack {
-  constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const prodBucket = new s3.Bucket(this, 'ProdBucket', {
