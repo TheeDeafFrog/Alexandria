@@ -37,7 +37,7 @@ class InfrastructurePipelineStack extends cdk.Stack {
                 commands: [
                     'npm ci',
                     'npm run build',
-                    'npm run cdk synth'
+                    'npx cdk synth'
                 ]
             })
         });
