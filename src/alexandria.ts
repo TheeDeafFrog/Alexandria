@@ -37,13 +37,14 @@ class InfrastructurePipelineStack extends cdk.Stack {
                 commands: [
                     'npm ci',
                     'npm run build',
-                    'npx cdk synth'
-                ]
+                    'npx cdk synth',
+                  ]
             })
         });
 
         const betaStage = pipeline.addStage(new FrontendApplication(this, stages.beta, props));
         betaStage.addPost(new cdk.pipelines.ManualApprovalStep('ProdPromotion'));
+
         pipeline.addStage(new FrontendApplication(this, stages.prod, props))
     }
 }
