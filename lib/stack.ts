@@ -7,7 +7,7 @@ export class AlexandriaBackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StageProps) {
     super(scope, id, props);
 
-    const bucketName = id === stages.prod ? 'content.cairo.kevinr.net' : 'beta.content.cairo.kevinr.net'
+    const bucketName = props?.stageName === stages.prod ? 'content.cairo.kevinr.net' : 'beta.content.cairo.kevinr.net'
 
     new s3.Bucket(this, 'ContentBucket', {
       bucketName

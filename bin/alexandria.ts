@@ -13,7 +13,10 @@ class BackendApplication extends cdk.Stage {
     constructor(scope: Construct, id: string, props?: cdk.StageProps) {
         super(scope, id, props);
 
-        new AlexandriaBackendStack(this, 'Backend', props);
+        new AlexandriaBackendStack(this, 'Backend', {
+            ...props,
+            stageName: id
+        });
     }
 } 
 
